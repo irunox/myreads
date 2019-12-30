@@ -52,7 +52,6 @@ class BookSearch extends Component {
     const { query } = this.state;
     const myBooks = this.props.myBooks;
     const searchedBooks = this.state.searchedBooks;
-    let errorMessage = "";
 
     if (myBooks) {
       myBooks.forEach(myBook => {
@@ -62,9 +61,8 @@ class BookSearch extends Component {
         }
       });
     }
-    if (this.state.noBooksFound === true) {
-      errorMessage = <h1 style={{ textAlign: `center` }}>No books found</h1>;
-    }
+
+    let errorMessage=this.state.query===""?"":"No books found";
 
     return (
       <div className="search-books">
@@ -82,7 +80,9 @@ class BookSearch extends Component {
           </div>
         </div>
         <div className="search-books-results">
-          <div>{errorMessage}</div>
+        {this.state.noBooksFound === true||this.state.query===""?
+          <div><h1 style={{ textAlign: `center` }}>{errorMessage}</h1></div>
+          :
           <ol className="books-grid">
             {searchedBooks &&
               searchedBooks.map(book => (
@@ -93,6 +93,7 @@ class BookSearch extends Component {
                 />
               ))}
           </ol>
+        }
         </div>
       </div>
     );
